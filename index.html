@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta author name="kdcode" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>good luck</title>
+  </head>
+  <body>
+    <div>
+      <p
+        style="
+          color: darkcyan;
+          font-size: 14px;
+          text-align: center;
+          padding: 5px 0;
+        "
+      >
+        firstname fathername grandfather
+      </p>
+      <div class="header-container">
+        <h2>Easy to fill form to see your result $ download your temporary</h2>
+        <h3>check functionality only support on firefox</h3>
+      </div>
+
+      <div class="input-wrapper">
+        <input type="text" placeholder="full name" class="name-input" />
+        <input type="text" placeholder="Admission card" class="id-input" />
+        <div class="errors"></div>
+        <div class="button-container">
+          <button id="check" onClick="handleSubmit()">check</button>
+          <button class="download" id="download" onClick="handleDownload()">
+            Download
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="pdf-container">
+      <object height="200" width="200" id="object-pdf" data="">
+        searching...
+      </object>
+      <h3 style="color: cyan">developed by kumex code</h3>
+    </div>
+  </body>
+  <script>
+    const nameInput = document.querySelector(".name-input");
+    const errorsDiv = document.querySelector(".errors");
+    const idInput = document.querySelector(".id-input");
+    const objectImage = document.querySelector("#object-pdf");
+    const buttons = document.querySelectorAll("#download,#check");
+    const javascript = document.querySelector("script");
+
+    // handling input validation
+    function inputValidation() {
+      let isValid = false;
+      let error = "";
+      let inputType = "";
+      let name = nameInput.value;
+      let admission = idInput.value;
+      let splittedName = name.toLowerCase().split(" ");
+      if (!name) {
+        error = "full name is required";
+        isValid = false;
+        inputType = "";
+      } else if (!admission) {
+        error = "registration number is required";
+        isValid = false;
+        inputType = "";
+      } else if (splittedName.length == 2) {
+        error = "Grandfather name is required";
+        isValid = false;
+        inputType = "";
+      } else if (splittedName.length === 3) {
+        error = "";
+        inputType = "long";
+        isValid = true;
+      } else if (splittedName.length === 1) {
+        error = "";
+        inputType = "short";
+        isValid = true;
+      }
+      return { isValid, error, inputType, splittedName, admission, name };
+    }
+
+    const handleDownload = () => {
+      urlName = "";
+      const { admission, error, inputType, isValid, splittedName, name } =
+        inputValidation();
+
+      if (isValid && inputType === "short") {
+        urlName = handleShortInput(name);
+        errorsDiv.innerText = "";
+      } else if (isValid && inputType === "long") {
+        urlName = handleLongInput(splittedName);
+        errorsDiv.innerText = "";
+      }
+      if (error) {
+        errorsDiv.innerText = error;
+      }
+      if (isValid && !error) {
+        link = document.createElement("a");
+        let filename = `${admission}${name}`;
+        link.download;
+        link.target = "_blank";
+        link.href = `https://verify.eaes.et/temporary/${urlName}=${admission}`;
+        errorsDiv.appendChild(link);
+        link.click();
+      }
+    };
+
+    const handleSubmit = () => {
+      let urlName = "";
+      const { admission, error, inputType, isValid, splittedName, name } =
+        inputValidation();
+
+      if (isValid && inputType === "short") {
+        errorsDiv.innerText = "";
+      } else if (isValid && inputType === "long") {
+        urlName = handleLongInput(splittedName);
+        errorsDiv.innerText = "";
+      }
+      if (error) {
+        errorsDiv.innerText = error;
+      }
+      if (isValid && !error) {
+        objectImage.setAttribute(
+          "data",
+          `https://verify.eaes.et/temporary/${urlName}=${admission}`
+        );
+      }
+    };
+
+    const handleLongInput = (splittedName) => {
+      let arrayName = [];
+      let urlName = "";
+      splittedName.map((item) => {
+        letter = item.slice(0, 2);
+        arrayName.push(letter);
+        urlName = `${arrayName[0]}${arrayName[2]}${arrayName[1]}`;
+      });
+      return urlName;
+    };
+
+    const handleShortInput = (name) => {
+      let a = [];
+      let b = [];
+      let c = [];
+      for (let i = 0; i < name.length; i++) {
+        if (i < 2) {
+          a.push(name[i]);
+        } else if (i >= 2 && i < 4) {
+          b.push(name[i]);
+        } else if (i >= 4 && i < 6) {
+          c.push(name[i]);
+        }
+      }
+      urlName = `${a.join("")}${c.join("")}${b.join("")}`;
+      return urlName;
+    };
+  </script>
+
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      min-height: 100vh;
+      background: #181728;
+      justify-content: space-around;
+      padding: 0 30px;
+      margin: 0;
+    }
+    .input-wrapper {
+      padding: 32px;
+      border-radius: 10px;
+      background: #201d32;
+    }
+    input {
+      display: block;
+      padding: 15px;
+      margin: 10px;
+      border-radius: 15px;
+      border: none;
+      border-bottom: 1px solid cyan;
+      outline: none;
+      transition: outline 300ms ease-in-out;
+      background: transparent;
+      color: white;
+    }
+    .button-container {
+      margin: 0 auto;
+      display: flex;
+      margin-top: 25px;
+    }
+    #download {
+      display: block;
+      font-size: 16px;
+      text-decoration: none;
+      background: #8c8af7;
+      color: white;
+      border-radius: 10px;
+      padding: 10px;
+    }
+    button {
+      margin: 0 auto;
+      display: block;
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-size: 17px;
+      background: #8c8af7;
+      transition: transform 400ms ease-in-out;
+    }
+    input:focus {
+      outline: 1px solid cyan;
+      border-bottom: 1px solid #fff;
+    }
+    #download:active,
+    button:active {
+      transform: scale(1.2);
+    }
+    .pdf-container {
+      height: 80vh;
+      width: 40%;
+      padding: 20px;
+      background: #201d32;
+      border-radius: 10px;
+      position: relative;
+    }
+    .errors {
+      color: red;
+      font-size: 14px;
+      height: 17px;
+    }
+    #object-pdf {
+      border: none;
+      outline: none;
+      color: red;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+    }
+
+    .header-container {
+      margin-top: -140px;
+      width: 200px;
+      color: white;
+    }
+    h2 {
+      font-size: 17px;
+      font-weight: bolder;
+      font-family: sans-serif, verdana, Tahoma;
+    }
+    h3 {
+      font-size: 15px;
+      font-weight: bolder;
+      font-family: sans-serif;
+    }
+    @media only screen and (max-width: 600px) {
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background: #181728;
+        /* justify-content: space-around; */
+        padding: 0 30px;
+        margin: 0;
+      }
+      .input-wrapper {
+        padding: 32px;
+        border-radius: 10px;
+        background: #201d32;
+        /* width: 100%; */
+      }
+      input {
+        display: block;
+        padding: 15px;
+        margin: 10px;
+        border-radius: 15px;
+        border: none;
+        border-bottom: 1px solid cyan;
+        outline: none;
+        transition: outline 300ms ease-in-out;
+        background: transparent;
+        color: white;
+      }
+      .button-container {
+        margin: 0 auto;
+        display: flex;
+        margin-top: 25px;
+      }
+      #download {
+        display: block;
+        font-size: 16px;
+        text-decoration: none;
+        background: #8c8af7;
+        color: white;
+        border-radius: 10px;
+        padding: 10px;
+      }
+      button {
+        margin: 0 auto;
+        display: block;
+        padding: 10px 15px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        color: #fff;
+        font-size: 17px;
+        background: #8c8af7;
+        transition: transform 400ms ease-in-out;
+      }
+      input:focus {
+        outline: 1px solid cyan;
+        border-bottom: 1px solid #fff;
+      }
+      #download:active,
+      button:active {
+        transform: scale(1.2);
+      }
+      .pdf-container {
+        margin-top: 20px;
+        height: 20vh;
+        width: 100%;
+        padding: 20px;
+        background: #201d32;
+        border-radius: 10px;
+        position: relative;
+      }
+      .errors {
+        color: red;
+        font-size: 14px;
+        height: 17px;
+      }
+      #object-pdf {
+        border: none;
+        outline: none;
+        color: red;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+      }
+
+      .header-container {
+        margin-top: 10px;
+        width: 200px;
+        color: white;
+      }
+      h2 {
+        font-size: 17px;
+        font-weight: bolder;
+        font-family: sans-serif, verdana, Tahoma;
+      }
+      h3 {
+        font-size: 15px;
+        font-weight: bolder;
+        font-family: sans-serif;
+      }
+    }
+  </style>
+</html>
