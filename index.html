@@ -8,22 +8,22 @@
   </head>
   <body>
     <div>
-      <p
-        style="
-          color: darkcyan;
-          font-size: 14px;
-          text-align: center;
-          padding: 5px 0;
-        "
-      >
-        firstname fathername grandfather
-      </p>
       <div class="header-container">
         <h2>Easy to fill form to see your result $ download your temporary</h2>
         <h3>check functionality only support on firefox</h3>
       </div>
 
       <div class="input-wrapper">
+        <p
+          style="
+            color: darkcyan;
+            font-size: 9px;
+            text-align: center;
+            font-weight: bolder;
+          "
+        >
+          firstname fathername grandfather
+        </p>
         <input type="text" placeholder="full name" class="name-input" />
         <input type="text" placeholder="Admission card" class="id-input" />
         <div class="errors"></div>
@@ -114,6 +114,7 @@
         inputValidation();
 
       if (isValid && inputType === "short") {
+        urlName = handleShortInput(name);
         errorsDiv.innerText = "";
       } else if (isValid && inputType === "long") {
         urlName = handleLongInput(splittedName);
